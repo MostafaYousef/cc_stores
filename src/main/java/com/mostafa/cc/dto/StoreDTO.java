@@ -8,51 +8,43 @@ public class StoreDTO {
 	private String openedDate;
 	private int daysOpened;
 	
+	public StoreDTO(String storeId, String postCode, String city, String address, String openedDate, int daysOpened) {
+		super();
+		this.storeId = storeId;
+		this.postCode = postCode;
+		this.city = city;
+		this.address = address;
+		this.openedDate = openedDate;
+		this.daysOpened = daysOpened;
+	}
+
 	public String getStoreId() {
 		return storeId;
-	}
-	
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
 	}
 	
 	public String getPostCode() {
 		return postCode;
 	}
 	
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-	
 	public String getCity() {
 		return city;
-	}
-	
-	public void setCity(String city) {
-		this.city = city;
 	}
 	
 	public String getAddress() {
 		return address;
 	}
 	
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
 	public String getOpenedDate() {
 		return openedDate;
 	}
 	
-	public void setOpenedDate(String openedDate) {
-		this.openedDate = openedDate;
-	}
-
 	public int getDaysOpened() {
 		return daysOpened;
 	}
 
-	public void setDaysOpened(int daysOpened) {
-		this.daysOpened = daysOpened;
+	@Override
+	public String toString() {
+		return "StoreDTO [storeId=" + storeId + ", postCode=" + postCode + ", city=" + city + ", address=" + address
+				+ ", openedDate=" + openedDate + ", daysOpened=" + daysOpened + "]";
 	}
 }
