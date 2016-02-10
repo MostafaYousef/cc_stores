@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.mostafa.cc.CCStoresApplication;
 import com.mostafa.cc.dto.StoreDTO;
+import com.mostafa.cc.dto.StoreInputDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(CCStoresApplication.class)
@@ -106,5 +107,12 @@ public class StoresControllerTest {
 		ResponseEntity<String> response = template.getForEntity(STORE_URL_WITH_ID, String.class, "invalid");
 
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+
+	@Test
+	public void addStore() {
+		ResponseEntity<String> response = template.postForEntity(STORE_URL, new StoreInputDTO(), String.class);
+		
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 	}
 }
