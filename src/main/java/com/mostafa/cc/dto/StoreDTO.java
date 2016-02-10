@@ -9,7 +9,6 @@ public class StoreDTO {
 	private int daysOpened;
 	
 	public StoreDTO(String storeId, String postCode, String city, String address, String openedDate, int daysOpened) {
-		super();
 		this.storeId = storeId;
 		this.postCode = postCode;
 		this.city = city;
