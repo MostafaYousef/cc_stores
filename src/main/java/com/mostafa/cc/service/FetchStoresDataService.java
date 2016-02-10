@@ -27,7 +27,7 @@ public class FetchStoresDataService implements StoresDataService {
 
 	@Override
 	@Cacheable("stores")
-	//FIXME: Bad practice to use the presentation DTO.
+	// FIXME: Bad practice to use the presentation DTO.
 	public List<StoreDTO> getStores() {
 		List<StoreDTO> stores = new ArrayList<>();
 		try {
@@ -35,27 +35,28 @@ public class FetchStoresDataService implements StoresDataService {
 			InputStream inputStream = url.openStream();
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-				//skip first line
+				// skip first line
 				String line = reader.readLine();
-				
+
 				while ((line = reader.readLine()) != null) {
 					String[] storeLine = line.split(SEPARATOR);
-					stores.add(new StoreDTO(storeLine[0], storeLine[1],storeLine[2], storeLine[3], storeLine[4], getDaysSinceDate(storeLine[4])));
+					stores.add(new StoreDTO(storeLine[0], storeLine[1], storeLine[2], storeLine[3], storeLine[4],
+							getDaysSinceDate(storeLine[4])));
 				}
 			} finally {
 				inputStream.close();
 			}
 		} catch (IOException e) {
-			
+
 		}
-		
+
 		return stores;
 	}
-	
+
 	private int getDaysSinceDate(String dateString) {
 		try {
 			Date date = DATE_FORMAT.parse(dateString);
-			int days = (int)((System.currentTimeMillis() - date.getTime()) / (1000 * 3600 * 24));
+			int days = (int) ((System.currentTimeMillis() - date.getTime()) / (1000 * 3600 * 24));
 			return days;
 		} catch (ParseException e) {
 			return -1;

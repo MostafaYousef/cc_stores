@@ -15,52 +15,52 @@ import com.mostafa.cc.service.StoresDataService;
 @Component
 public class StoreFacade {
 	private StoresDataService storesDataService;
-	
+
 	@Autowired
 	public StoreFacade(StoresDataService storesDataService) {
 		this.storesDataService = storesDataService;
 	}
 
 	public List<StoreDTO> getAllStores(String sort) {
-		if(StringUtils.isEmpty(sort)) {
+		if (StringUtils.isEmpty(sort)) {
 			throw new IllegalArgumentException("Sort cannot be empty!");
 		}
-		
-		//copy the stores list
+
+		// copy the stores list
 		List<StoreDTO> stores = new ArrayList<>(storesDataService.getStores());
-		
+
 		Collections.sort(stores, getComparator(sort));
 		return stores;
 	}
 
 	public StoreDTO getStore(String storeId) {
-		if(StringUtils.isEmpty(storeId)) {
+		if (StringUtils.isEmpty(storeId)) {
 			throw new IllegalArgumentException("Store id cannot be empty!");
 		}
 
 		List<StoreDTO> stores = storesDataService.getStores();
-		for(StoreDTO store : stores) {
-			if(storeId.equals(store.getStoreId())) {
+		for (StoreDTO store : stores) {
+			if (storeId.equals(store.getStoreId())) {
 				return store;
 			}
 		}
 		throw new IllegalArgumentException("Could not find store with storeid: " + storeId);
 	}
-	
+
 	private Comparator<StoreDTO> getComparator(String sort) {
 		Comparator<StoreDTO> comparator = null;
 
-		if(sort.matches("\\-?(city)")) {
+		if (sort.matches("\\-?(city)")) {
 			comparator = new CityComparator();
-		} else if(sort.matches("\\-?(date)")) {
+		} else if (sort.matches("\\-?(date)")) {
 			comparator = new DateComparator();
 		} else {
 			throw new IllegalArgumentException(sort + " is not a valid sort parameter");
 		}
-		
+
 		return sort.startsWith("-") ? Collections.reverseOrder(comparator) : comparator;
 	}
-	
+
 	class CityComparator implements Comparator<StoreDTO> {
 		@Override
 		public int compare(StoreDTO store1, StoreDTO store2) {
