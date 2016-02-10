@@ -6,11 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -19,8 +19,7 @@ import com.mostafa.cc.dto.StoreDTO;
 
 @Component
 public class FetchStoresDataService implements StoresDataService {
-	private static final String SEPARATOR = "\"?(,|$)(?=(([^\"]*\"){2})*[^\"]*$) *\"?";
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+	private static final Logger LOG = Logger.getLogger(FetchStoresDataService.class);
 
 	@Value("${data.stores.url}")
 	private String dataUrl;
@@ -40,6 +39,7 @@ public class FetchStoresDataService implements StoresDataService {
 
 				while ((line = reader.readLine()) != null) {
 					String[] storeLine = line.split(SEPARATOR);
+					// TODO: improve exception and fault handling
 					stores.add(new StoreDTO(storeLine[0], storeLine[1], storeLine[2], storeLine[3], storeLine[4],
 							getDaysSinceDate(storeLine[4])));
 				}
@@ -47,7 +47,7 @@ public class FetchStoresDataService implements StoresDataService {
 				inputStream.close();
 			}
 		} catch (IOException e) {
-
+			LOG.error("An error occured during fetch of source file", e);
 		}
 
 		return stores;
