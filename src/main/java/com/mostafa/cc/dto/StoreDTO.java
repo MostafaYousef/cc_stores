@@ -8,6 +8,9 @@ public class StoreDTO {
 	private String openedDate;
 	private int daysOpened;
 
+	public StoreDTO() {
+	}
+
 	public StoreDTO(String storeId, String postCode, String city, String address, String openedDate, int daysOpened) {
 		this.storeId = storeId;
 		this.postCode = postCode;

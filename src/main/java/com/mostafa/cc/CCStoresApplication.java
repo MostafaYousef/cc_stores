@@ -12,12 +12,12 @@ import org.springframework.core.io.ClassPathResource;
 public class CCStoresApplication {
 
 	@Bean
-    public EhCacheManagerFactoryBean getEhCacheFactory(){
-        EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
-        factoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
-        factoryBean.setShared(true);
-        return factoryBean;
-    }
+	public EhCacheManagerFactoryBean getEhCacheFactory() {
+		EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
+		factoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+		factoryBean.setShared(true);
+		return factoryBean;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CCStoresApplication.class, args);
