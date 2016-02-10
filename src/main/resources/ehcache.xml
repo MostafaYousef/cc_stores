@@ -1,0 +1,4 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd">
+	<cache name="stores" maxEntriesLocalHeap="10" timeToLiveSeconds="3600" />	
+</ehcache>

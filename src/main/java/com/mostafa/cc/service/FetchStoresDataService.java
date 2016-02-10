@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import com.mostafa.cc.dto.StoreDTO;
@@ -25,6 +26,7 @@ public class FetchStoresDataService implements StoresDataService {
 	private String dataUrl;
 
 	@Override
+	@Cacheable("stores")
 	//FIXME: Bad practice to use the presentation DTO.
 	public List<StoreDTO> getStores() {
 		List<StoreDTO> stores = new ArrayList<>();
@@ -38,10 +40,7 @@ public class FetchStoresDataService implements StoresDataService {
 				
 				while ((line = reader.readLine()) != null) {
 					String[] storeLine = line.split(SEPARATOR);
-					
-					StoreDTO store = new StoreDTO(storeLine[0], storeLine[1],storeLine[2], storeLine[3], storeLine[4], getDaysSinceDate(storeLine[4]));
-					System.out.println(store);
-					stores.add(store);
+					stores.add(new StoreDTO(storeLine[0], storeLine[1],storeLine[2], storeLine[3], storeLine[4], getDaysSinceDate(storeLine[4])));
 				}
 			} finally {
 				inputStream.close();
